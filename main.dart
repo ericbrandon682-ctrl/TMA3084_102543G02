@@ -6,13 +6,13 @@ void main() {
 
   bool ordering = true;
 
-  // while loop for continuous ordering and input validation
+  // while loop for continuous ordering
   while (ordering) {
     // Pizza size input
     print("Please enter your pizza size (small, medium, or large)");
     String size = (stdin.readLineSync() ?? '').trim().toLowerCase();
 
-    // Validate size before asking for quantity
+    // size validation
     if (size != "small" && size != "medium" && size != "large") {
       print("Invalid pizza size. Please try again.");
       continue;
@@ -22,7 +22,7 @@ void main() {
     print("How many pizzas do you want of $size?");
     int? quantity = int.tryParse((stdin.readLineSync() ?? '').trim());
 
-    if (quantity == null || quantity <= 0) {
+    if (quantity == null) {
       print("Invalid quantity. Please try again.");
       continue;
     }
