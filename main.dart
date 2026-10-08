@@ -1,36 +1,56 @@
 import 'dart:io';
 
 void main() {
-  //Pizza price statement
+  // Pizza price statement
   print("Pizza Price: Small: 5 USD, Medium: 7 USD, Large: 10 USD");
 
-  //Pizza size input
-  print("Please enter your pizza size (small, medium, or large)");
-  String? size = stdin.readLineSync();
+  bool ordering = true;
 
-  int size_cost;
-  switch (size) {
-    case "small":
-      size_cost = 5;
-      break;
-    case "medium":
-      size_cost = 7;
-      break;
-    case "large":
-      size_cost = 10;
-    default:
+  // while loop for continuous ordering and input validation
+  while (ordering) {
+    // Pizza size input
+    print("Please enter your pizza size (small, medium, or large)");
+    String size = (stdin.readLineSync() ?? '').trim().toLowerCase();
+
+    // Validate size before asking for quantity
+    if (size != "small" && size != "medium" && size != "large") {
       print("Invalid pizza size. Please try again.");
-      return;
-  }
-  //Pizza quantity input
-  print("How many pizzas do you want of $size?");
-  int? quantity = int.tryParse(stdin.readLineSync() ?? '');
-  if (quantity == null) {
-    print("Invalid quantity. Please try again.");
-    return;
-  }
+      continue;
+    }
 
-  //Total pizza cost
-  int total = size_cost * quantity;
-  print('Your Total Payment is: \$$total');
+    // Pizza quantity input
+    print("How many pizzas do you want of $size?");
+    int? quantity = int.tryParse((stdin.readLineSync() ?? '').trim());
+
+    if (quantity == null || quantity <= 0) {
+      print("Invalid quantity. Please try again.");
+      continue;
+    }
+
+    // switch, total payment
+    int total;
+    switch (size) {
+      case "small":
+        total = 5 * quantity;
+        print('Your Total Payment is: \$$total');
+        break;
+      case "medium":
+        total = 7 * quantity;
+        print('Your Total Payment is: \$$total');
+        break;
+      case "large":
+        total = 10 * quantity;
+        print('Your Total Payment is: \$$total');
+        break;
+      default:
+        print("Invalid pizza size. Please try again.");
+    }
+
+    // Repeat order
+    print("Do you want to order again? (yes/no)");
+    String again = (stdin.readLineSync() ?? '').trim().toLowerCase();
+    if (again != "yes") {
+      ordering = false;
+    }
+  }
 }
